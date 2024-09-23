@@ -5,9 +5,11 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
         python2=2.7.18-3 \
         python3=3.9.2-3 \
         python-setuptools=44.1.1-1 \
-        python3-setuptools=52.0.0-4 \
-        git=1:2.30.2-1 \
+        git=1:2.30.2-1+deb11u2 \
         build-essential=12.9
+
+# Choose right version for architecture
+RUN bash -c '[[ $(dpkg --print-architecture) == "armel" ]] && apt-get install -y --no-install-recommends python3-setuptools=52.0.0-4 || apt-get install -y --no-install-recommends python3-setuptools=52.0.0-4+deb11u1'
 
 # hadolint ignore=DL3003
 RUN git config --global advice.detachedHead false && \
